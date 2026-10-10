@@ -1,0 +1,26 @@
+# Sampling Parameters for Gemma 4 31B IT QAT (W4A16)
+# Low-temperature configuration to prevent hallucinatory edits and token drift
+
+default:
+  temperature: 0.15
+  top_p: 0.95
+  top_k: 40
+  max_output_tokens: 2048
+  repetition_penalty: 1.05
+
+stages:
+  localizer:
+    temperature: 0.10
+    top_p: 0.90
+    max_output_tokens: 1024
+    description: "High determinism for symbol reference matching"
+  synthesizer:
+    temperature: 0.20
+    top_p: 0.95
+    max_output_tokens: 2048
+    description: "Controlled diversity for minimal diff synthesis"
+  verifier:
+    temperature: 0.05
+    top_p: 0.85
+    max_output_tokens: 512
+    description: "Maximum precision for syntactic diff checking"

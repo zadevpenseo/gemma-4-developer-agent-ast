@@ -1,0 +1,28 @@
+name: "synthesizer"
+role: "Minimal diff synthesis"
+model: "gemma-4-31b-it-qat-w4a16-ct"
+sampling:
+  temperature: 0.20
+  top_p: 0.95
+max_tool_calls: 3
+timeout_seconds: 50
+
+allowed_tools:
+  - "file_viewer"
+
+output_schema:
+  type: "object"
+  required:
+    - "unified_diff"
+    - "rationale"
+    - "modified_files"
+  properties:
+    unified_diff:
+      type: "string"
+    rationale:
+      type: "string"
+    modified_files:
+      type: "array"
+      items:
+        type: "string"
+      maxItems: 3

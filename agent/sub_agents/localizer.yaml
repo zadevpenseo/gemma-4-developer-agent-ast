@@ -1,0 +1,43 @@
+name: "localizer"
+role: "AST-guided fault localization"
+model: "gemma-4-31b-it-qat-w4a16-ct"
+sampling:
+  temperature: 0.10
+  top_p: 0.90
+max_tool_calls: 3
+timeout_seconds: 40
+
+allowed_tools:
+  - "ast_skeleton_search"
+  - "ripgrep_search"
+  - "file_viewer"
+
+output_schema:
+  type: "object"
+  required:
+    - "target_files"
+    - "suspect_spans"
+    - "confidence_score"
+  properties:
+    target_files:
+      type: "array"
+      items:
+        type: "string"
+      maxItems: 3
+    suspect_spans:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          file:
+            type: "string"
+          start_line:
+            type: "integer"
+          end_line:
+            type: "integer"
+          symbol_name:
+            type: "string"
+    confidence_score:
+      type: "number"
+      minimum: 0.0
+      maximum: 1.0

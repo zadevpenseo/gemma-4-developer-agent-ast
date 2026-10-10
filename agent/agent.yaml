@@ -1,0 +1,71 @@
+# Google Agent Development Kit (ADK) Configuration
+# Gemma 4 Developer Agent: Deterministic AST-Guided Fault Localization
+schema_version: "2.0"
+name: "gemma-4-developer-agent"
+version: "1.0.0"
+description: "Declarative three-stage developer agent optimized for 4-bit quantized attention mechanisms"
+
+runtime:
+  framework: "google-adk"
+  mode: "offline"
+  isolation: "container"
+  execution_limits:
+    timeout_seconds_per_issue: 120
+    cumulative_timeout_hours: 12
+    max_steps_per_stage: 3
+    fast_fail_on_empty_localization: true
+    memory_limit_mb: 8192
+
+model:
+  name: "gemma-4-31b-it-qat-w4a16-ct"
+  provider: "kaggle-local"
+  context_window: 8192
+  sampling_config: "configs/sampling.yaml"
+
+sub_agents:
+  localizer:
+    config: "sub_agents/localizer.yaml"
+    prompt: "prompts/localizer.md"
+  synthesizer:
+    config: "sub_agents/synthesizer.yaml"
+    prompt: "prompts/synthesizer.md"
+  verifier:
+    config: "sub_agents/verifier.yaml"
+    prompt: "prompts/verifier.md"
+
+tools:
+  - name: "ast_skeleton_search"
+    type: "deterministic"
+    max_output_tokens: 1500
+    parameters:
+      include_docstrings: true
+      include_signatures_only: true
+  - name: "ripgrep_search"
+    type: "deterministic"
+    max_matches: 25
+  - name: "file_viewer"
+    type: "deterministic"
+    max_lines_per_call: 120
+  - name: "patch_validator"
+    type: "deterministic"
+    command: "git apply --check"
+
+lifecycle:
+  pipeline:
+    - stage: "fault_localization"
+      agent: "localizer"
+      max_calls: 3
+      stop_conditions:
+        - "localized_files_count >= 1"
+        - "empty_candidates_fast_exit"
+    - stage: "patch_synthesis"
+      agent: "synthesizer"
+      max_calls: 3
+      stop_conditions:
+        - "unified_diff_produced"
+    - stage: "patch_verification"
+      agent: "verifier"
+      max_calls: 2
+      stop_conditions:
+        - "git_apply_clean"
+        - "overfixing_guard_passed"

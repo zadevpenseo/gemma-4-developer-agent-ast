@@ -1,0 +1,33 @@
+name: "verifier"
+role: "Diff syntax verification and overfixing guard"
+model: "gemma-4-31b-it-qat-w4a16-ct"
+sampling:
+  temperature: 0.05
+  top_p: 0.85
+max_tool_calls: 2
+timeout_seconds: 30
+
+allowed_tools:
+  - "patch_validator"
+
+overfixing_guard:
+  max_modified_lines: 80
+  max_modified_files: 2
+  reject_refactorings: true
+  reject_comment_churn: true
+
+output_schema:
+  type: "object"
+  required:
+    - "is_valid"
+    - "clean_patch"
+    - "validation_errors"
+  properties:
+    is_valid:
+      type: "boolean"
+    clean_patch:
+      type: "string"
+    validation_errors:
+      type: "array"
+      items:
+        type: "string"
