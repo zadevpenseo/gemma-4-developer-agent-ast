@@ -5,7 +5,7 @@
 **Affiliation**: Institut Al Bahjah, Cirebon, Indonesia (Email: muhzadit@gmail.com)  
 **Code Repository**: [github.com/zadevpenseo/gemma-4-developer-agent-ast](https://github.com/zadevpenseo/gemma-4-developer-agent-ast)  
 **Manuscript PDF**: [`manuscript.pdf`](https://github.com/zadevpenseo/gemma-4-developer-agent-ast/blob/main/paper/manuscript.pdf)  
-**Interactive Visual Explainer**: [`visual_explainer.html`](https://github.com/zadevpenseo/gemma-4-developer-agent-ast/blob/main/paper/visual_explainer.html)
+**Interactive Web Simulator**: [Live Demo on GitHub Pages](https://zadevpenseo.github.io/gemma-4-developer-agent-ast/)
 
 ---
 
@@ -118,4 +118,4 @@ All code, evaluation logs, and prompts are structured to run cleanly:
 
 1. **Benchmark Evaluation**: Run `python paper/benchmark_harness.py` to replay the 60 defect tests offline.
 2. **Read the Full Paper**: Open `paper/manuscript.pdf` for the complete mathematical derivation and proofs.
-3. **Interactive Explorer**: Launch `paper/visual_explainer.html` in your browser to test different context budgets and watch entropy curves shift in real time.
+3. **Interactive Explorer**: Launch the [Live Web Simulator](https://zadevpenseo.github.io/gemma-4-developer-agent-ast/) in your browser or run `paper/visual_explainer.html` locally to test different context budgets and watch entropy curves shift in real time.

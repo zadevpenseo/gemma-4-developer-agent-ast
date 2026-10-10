@@ -5,7 +5,7 @@
 **Affiliation**: Institut Al Bahjah, Cirebon, Indonesia (Email: muhzadit@gmail.com)  
 **Code Repository**: [github.com/zadevpenseo/gemma-4-developer-agent-ast](https://github.com/zadevpenseo/gemma-4-developer-agent-ast)  
 **Manuscript PDF**: [`manuscript.pdf`](https://github.com/zadevpenseo/gemma-4-developer-agent-ast/blob/main/paper/manuscript.pdf)  
-**Interactive Visual Explainer**: [`visual_explainer.html`](https://github.com/zadevpenseo/gemma-4-developer-agent-ast/blob/main/paper/visual_explainer.html)
+**Interactive Visual Explainer**: [`visual_explainer.html`](https://zadevpenseo.github.io/gemma-4-developer-agent-ast/)
 
 ---
 
